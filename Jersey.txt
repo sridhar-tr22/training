@@ -1,0 +1,72 @@
+package com.self.WebServicesTelusko;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Path("myjerseyresources")
+public class MyJerseyResources {
+	
+	AlienRepository repo = new AlienRepository();
+	@GET
+	@Path("allaliens")
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public List<Alien> getAllAlies() throws SQLException
+	{
+	List<Alien> al = repo.getAllAliens();
+		return al;	
+	}
+	
+	@GET
+	@Path("aliens/{id}")
+	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Alien getAlien(@PathParam("id") int id) throws SQLException
+	{
+		System.out.println("ID = "+id);
+		Alien al = repo.getAlien(id); 
+		return al;
+	}
+	
+	
+	@POST
+	@Path("addresource")
+	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public List<Alien> addAlien(Alien alien) throws SQLException
+	{
+		List<Alien> al = repo.createAlien(alien);
+		return al;
+	}
+	
+	@PUT
+	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Path("updateresource")
+	public List<Alien> updateAlien(Alien alien) throws SQLException
+	{
+		List<Alien> al = repo.updateAlien(alien);
+		return al;
+	}
+	
+
+	@DELETE
+	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Path("deletealien/{id}")
+	public List<Alien> deleteAlien(@PathParam("id")int id) throws SQLException
+	{
+		List <Alien> al = repo.deleteAlien(id);
+		
+		return al;
+	}
+}

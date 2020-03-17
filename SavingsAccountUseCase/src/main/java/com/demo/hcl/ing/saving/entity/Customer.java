@@ -39,6 +39,33 @@ public class Customer {
 	private String aadharNumber;
 	private String passportNumber;
 	private String accountType;
+	public Customer(String customerId, String firstName, String middleName, String lastName, String gender,
+			String address1, String address2, String city, String state, Integer zipCode, List<Account> account,
+			String phoneNumber, String emailAddress, Integer accountOpeningBalance, String dateOfBirth,
+			String citizenship, String aadharNumber, String passportNumber, String accountType, String password) {
+		super();
+		this.customerId = customerId;
+		this.firstName = firstName;
+		this.middleName = middleName;
+		this.lastName = lastName;
+		this.gender = gender;
+		this.address1 = address1;
+		this.address2 = address2;
+		this.city = city;
+		this.state = state;
+		this.zipCode = zipCode;
+		this.account = account;
+		this.phoneNumber = phoneNumber;
+		this.emailAddress = emailAddress;
+		this.accountOpeningBalance = accountOpeningBalance;
+		this.dateOfBirth = dateOfBirth;
+		this.citizenship = citizenship;
+		this.aadharNumber = aadharNumber;
+		this.passportNumber = passportNumber;
+		this.accountType = accountType;
+		this.password = password;
+	}
+	private String password;
 	public String getFirstName() {
 		return firstName;
 	}
@@ -188,7 +215,13 @@ public class Customer {
 				+ ", phoneNumber=" + phoneNumber + ", emailAddress=" + emailAddress + ", accountOpeningBalance="
 				+ accountOpeningBalance + ", dateOfBirth=" + dateOfBirth + ", citizenship=" + citizenship
 				+ ", aadharNumber=" + aadharNumber + ", passportNumber=" + passportNumber + ", accountType="
-				+ accountType + "]";
+				+ accountType + ", password=" + password + "]";
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	

@@ -5,8 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.demo.hcl.ing.saving.controller.response.CustomerResponse;
+import com.demo.hcl.ing.saving.controller.response.Message;
+import com.demo.hcl.ing.saving.controller.response.ResponseObject;
 import com.demo.hcl.ing.saving.dto.BeneficiaryDTO;
 import com.demo.hcl.ing.saving.dto.CustomerDTO;
 import com.demo.hcl.ing.saving.dto.CustomerLoginDTO;
@@ -19,6 +23,7 @@ import com.demo.hcl.ing.saving.service.RegisterNewCustomer;
 import com.demo.hcl.ing.saving.service.TransactionService;
 
 @RestController
+@RequestMapping("/bank")
 public class AccountController {
 
 	@Autowired
@@ -28,43 +33,94 @@ public class AccountController {
 	@Autowired
 	TransactionService transactionService;
 
+	private ResponseObject responseObject = null;
+	private Message message = null;
+
+	private HttpStatus statusCodeHttp;
+
+	
 	@PostMapping("/register")
-	public ResponseEntity<String> newCustomerRegistrationDetails(@RequestBody CustomerDTO customer) {
-		System.out.println("Customer is in controller " + customer);
+	public ResponseEntity<ResponseObject> newCustomerRegistrationDetails(@RequestBody CustomerDTO customer) {
+		responseObject = new ResponseObject();
+		message = new Message();
 		Customer customerDetails = registerNewCustomer.newCustomerDetails(customer.getCustomer());
 		if (customerDetails != null) {
-			return new ResponseEntity<>("Customer Details saved successfully!", HttpStatus.OK);
-		} else
-			return new ResponseEntity<>("Customer Details are not saved", HttpStatus.BAD_REQUEST);
+
+			CustomerResponse customerResponse = new CustomerResponse();
+			customerResponse.setCustomerName(customerDetails.getFirstName() + " " + customerDetails.getLastName());
+			customerResponse.setAccountNumber(customerDetails.getAccount());
+
+			/* Message are set here */
+			message.setMessage("Account Created Successfully.");
+			message.setStatusCode("200");
+
+			responseObject.setObject(customerResponse);
+			responseObject.setMessage(message);
+			// statusCodeHttp = HttpStatus.CREATED;
+
+		} else {
+
+			message.setMessage("Account creation failed, please try later.");
+			message.setStatusCode("400");
+
+			responseObject.setMessage(message);
+			// statusCodeHttp = HttpStatus.EXPECTATION_FAILED;
+		}
+		return new ResponseEntity<ResponseObject>(responseObject, HttpStatus.OK);
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<String> applogin(@RequestBody CustomerLoginDTO customerLoginDTO) {
+	public ResponseEntity<ResponseObject> applogin(@RequestBody CustomerLoginDTO customerLoginDTO) {
+		responseObject = new ResponseObject();
+		message = new Message();
 		Boolean b = registerNewCustomer.validateUser(customerLoginDTO.getCustomerCredentials());
-
-		if (b)
-			return new ResponseEntity<>("Login Successfully!", HttpStatus.OK);
-		else
-			return new ResponseEntity<>("Login Unsuccessfull", HttpStatus.BAD_REQUEST);
-
+		if (b) {
+			message.setMessage("Login Successful");
+			message.setStatusCode("200");
+			responseObject.setMessage(message);
+		} else {
+			message.setMessage("Incorrect UserName or Password.");
+			message.setStatusCode("406");
+			responseObject.setMessage(message);
+		}
+		return new ResponseEntity<ResponseObject>(responseObject, HttpStatus.OK);
 	}
 
 	@PostMapping("/beneficiary")
-	public ResponseEntity<String> addNewBeneficiary(@RequestBody BeneficiaryDTO beneficiaryDTO) {
+	public ResponseEntity<ResponseObject> addNewBeneficiary(@RequestBody BeneficiaryDTO beneficiaryDTO) {
+		responseObject = new ResponseObject();
+		message = new Message();
 		Beneficiary savedBeneficiary = registerNewBeneficiary.saveBeneficiary(beneficiaryDTO.getBeneficiary());
 		if (savedBeneficiary != null) {
-			return new ResponseEntity<>("Beneficiary Details saved successfully!", HttpStatus.OK);
-		} else
-			return new ResponseEntity<>("Beneficiary Details are not saved", HttpStatus.BAD_REQUEST);
+			message.setStatusCode("200");
+			message.setMessage("Beneficiary Account added successfully.");
+			responseObject.setObject(savedBeneficiary);
+			responseObject.setMessage(message);
+
+		} else {
+			message.setStatusCode("406");
+			message.setMessage("Beneficiary Account could not be added, please try later.");
+			responseObject.setMessage(message);
+		}
+		return new ResponseEntity<ResponseObject>(responseObject, HttpStatus.OK);
 	}
 
 	@PostMapping("/fundTransfer")
-	public ResponseEntity<String> beneficiaryFundTransfer(@RequestBody TransactionDTO transactionDTO) {
+	public ResponseEntity<ResponseObject> beneficiaryFundTransfer(@RequestBody TransactionDTO transactionDTO) {
+		responseObject = new ResponseObject();
+		message = new Message();
 		Transaction transaction = transactionService.performTransaction(transactionDTO.getTransaction());
-		if(transaction!=null)
-		{
-			return new ResponseEntity<>("Transaction completed successfully!", HttpStatus.OK);
+		if (transaction != null) {
+			message.setStatusCode("200");
+			message.setMessage("Transaction completed successfully.");
+			responseObject.setObject(transaction);
+			responseObject.setMessage(message);
+
+		} else {
+			message.setStatusCode("406");
+			message.setMessage("Transaction Failed, please try later.");
+			responseObject.setMessage(message);
 		}
-		return new ResponseEntity<>("Transaction completed successfully!", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<ResponseObject>(responseObject, HttpStatus.OK);
 	}
 }

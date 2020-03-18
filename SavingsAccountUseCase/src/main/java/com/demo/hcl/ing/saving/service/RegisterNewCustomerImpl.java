@@ -1,9 +1,12 @@
 package com.demo.hcl.ing.saving.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.hcl.ing.saving.dao.CustomerDao;
+import com.demo.hcl.ing.saving.entity.Account;
 import com.demo.hcl.ing.saving.entity.Customer;
 import com.demo.hcl.ing.saving.entity.CustomerCredentials;
 import com.demo.hcl.ing.saving.utils.AccountUtils;
@@ -20,9 +23,15 @@ public class RegisterNewCustomerImpl implements RegisterNewCustomer {
 	@Override
 	public Customer newCustomerDetails(Customer customer) {
 		assignCustomerIdAndAccountNumber(customer);
-		customerDao.save(customer);
-
-		return customer;
+		Customer saved = customerDao.save(customer);
+		
+		System.out.println("Customer: " + saved);
+		
+		List<Account> account = saved.getAccount();
+		
+			System.out.println("Account: " + account);
+		
+		return saved;
 	}
 
 	public Customer assignCustomerIdAndAccountNumber(Customer customer) {

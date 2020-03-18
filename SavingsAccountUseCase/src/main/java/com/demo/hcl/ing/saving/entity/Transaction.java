@@ -12,7 +12,7 @@ public class Transaction {
 	private Long transactionId;
 	private Long fromAccount;
 	private Long toAccount;
-	private Double balance;
+	private Double amount;
 	private Date transactionDate;
 	
 	public Transaction()
@@ -38,10 +38,10 @@ public class Transaction {
 		this.toAccount = toAccount;
 	}
 	public Double getBalance() {
-		return balance;
+		return amount;
 	}
-	public void setBalance(Double balance) {
-		this.balance = balance;
+	public void setBalance(Double amount) {
+		this.amount = amount;
 	}
 	public Date getTransactionDate() {
 		return transactionDate;
@@ -52,14 +52,14 @@ public class Transaction {
 	@Override
 	public String toString() {
 		return "Transaction [transactionId=" + transactionId + ", fromAccount=" + fromAccount + ", toAccount="
-				+ toAccount + ", balance=" + balance + ", transactionDate=" + transactionDate + "]";
+				+ toAccount + ", amount=" + amount + ", transactionDate=" + transactionDate + "]";
 	}
-	public Transaction(Long transactionId, Long fromAccount, Long toAccount, Double balance, Date transactionDate) {
+	public Transaction(Long transactionId, Long fromAccount, Long toAccount, Double amount, Date transactionDate) {
 		super();
 		this.transactionId = transactionId;
 		this.fromAccount = fromAccount;
 		this.toAccount = toAccount;
-		this.balance = balance;
+		this.amount = amount;
 		this.transactionDate = transactionDate;
 	}
 	

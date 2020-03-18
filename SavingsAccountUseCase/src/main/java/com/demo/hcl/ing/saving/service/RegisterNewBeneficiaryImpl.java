@@ -15,7 +15,6 @@ public class RegisterNewBeneficiaryImpl implements RegisterNewBeneficiary {
 	
 	@Override
 	public Beneficiary saveBeneficiary(Beneficiary beneficiary) {
-		System.out.println("in Service Beneficiary before saving "+ beneficiary );
 		beneficiaryDao.save(beneficiary);
 		
 	return beneficiary;

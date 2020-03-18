@@ -18,7 +18,7 @@ public class Account {
 	private String accountBranch;
 	private String ifscCode;
 	private Double balance;
-	
+	private String accountType;
 	
 	public Account()
 	{
@@ -67,5 +67,13 @@ public class Account {
 		this.accountNumber = accountNumber;
 	}
 
-	
+
+	public String getAccountType() {
+		return accountType;
+	}
+
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
 }

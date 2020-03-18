@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -27,7 +28,7 @@ public class Customer {
 	private String city;
 	private String state;
 	private Integer zipCode;
-	@OneToMany(targetEntity = Account.class, cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Account.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "cust_fk", referencedColumnName = "customerId")
 	private List<Account> account;
 	

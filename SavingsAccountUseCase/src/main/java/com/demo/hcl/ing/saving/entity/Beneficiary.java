@@ -13,18 +13,15 @@ public class Beneficiary {
 	private Long beneficiaryAccountNumber;
 	private String accountHolderName;
 	private String nickName;
-	private String registerPayerfor; 
+	private String registerPayerfor;
 	private String accountBranch;
 	private String accountType;
 	private String createdBy;
-	private Long customerAccountNumber; 
-	
-	public Beneficiary()
-	{
+	private Long customerAccountNumber;
+
+	public Beneficiary() {
 		super();
 	}
-
-	
 
 	public Integer getId() {
 		return id;
@@ -33,8 +30,6 @@ public class Beneficiary {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	
 
 	public String getAccountHolderName() {
 		return accountHolderName;
@@ -92,8 +87,6 @@ public class Beneficiary {
 		this.customerAccountNumber = customerAccountNumber;
 	}
 
-
-
 	public Beneficiary(Integer id, Long beneficiaryAccountNumber, String accountHolderName, String nickName,
 			String registerPayerfor, String accountBranch, String accountType, String createdBy,
 			Long customerAccountNumber) {
@@ -109,19 +102,13 @@ public class Beneficiary {
 		this.customerAccountNumber = customerAccountNumber;
 	}
 
-
-
 	public Long getBeneficiaryAccountNumber() {
 		return beneficiaryAccountNumber;
 	}
 
-
-
 	public void setBeneficiaryAccountNumber(Long beneficiaryAccountNumber) {
 		this.beneficiaryAccountNumber = beneficiaryAccountNumber;
 	}
-
-
 
 	@Override
 	public String toString() {
@@ -131,8 +118,4 @@ public class Beneficiary {
 				+ ", createdBy=" + createdBy + ", customerAccountNumber=" + customerAccountNumber + "]";
 	}
 
-	
-
-	
-	
-	}	
+}

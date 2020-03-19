@@ -9,11 +9,7 @@ import com.demo.hcl.ing.saving.utils.AccountUtils;
 
 @Entity
 public class Account {
-
-	
-	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long accountNumber;
 	private String accountBranch;
 	private String ifscCode;
@@ -44,17 +40,22 @@ public class Account {
 	public void setBalance(Double balance) {
 		this.balance = balance;
 	}
+	
+
 	@Override
 	public String toString() {
 		return "Account [accountNumber=" + accountNumber + ", accountBranch=" + accountBranch + ", ifscCode=" + ifscCode
-				+ ", balance=" + balance + "]";
+				+ ", balance=" + balance + ", accountType=" + accountType + "]";
 	}
-	public Account(Long accountNumber, String accountBranch, String ifscCode, Double balance) {
+
+
+	public Account(Long accountNumber, String accountBranch, String ifscCode, Double balance, String accountType) {
 		super();
 		this.accountNumber = accountNumber;
 		this.accountBranch = accountBranch;
 		this.ifscCode = ifscCode;
 		this.balance = balance;
+		this.accountType = accountType;
 	}
 
 

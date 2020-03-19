@@ -1,5 +1,7 @@
 package com.demo.hcl.ing.saving.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +24,11 @@ import com.demo.hcl.ing.saving.service.RegisterNewBeneficiary;
 import com.demo.hcl.ing.saving.service.RegisterNewCustomer;
 import com.demo.hcl.ing.saving.service.TransactionService;
 
+import lombok.extern.log4j.Log4j2;
+
 @RestController
 @RequestMapping("/bank")
+@Log4j2
 public class AccountController {
 
 	@Autowired
@@ -36,35 +41,23 @@ public class AccountController {
 	private ResponseObject responseObject = null;
 	private Message message = null;
 
-	private HttpStatus statusCodeHttp;
-
-	
 	@PostMapping("/register")
-	public ResponseEntity<ResponseObject> newCustomerRegistrationDetails(@RequestBody CustomerDTO customer) {
+	public ResponseEntity<ResponseObject> newCustomerRegistrationDetails( @Valid @RequestBody CustomerDTO customer) {
 		responseObject = new ResponseObject();
 		message = new Message();
 		Customer customerDetails = registerNewCustomer.newCustomerDetails(customer.getCustomer());
 		if (customerDetails != null) {
-
 			CustomerResponse customerResponse = new CustomerResponse();
 			customerResponse.setCustomerName(customerDetails.getFirstName() + " " + customerDetails.getLastName());
 			customerResponse.setAccountNumber(customerDetails.getAccount());
-
-			/* Message are set here */
 			message.setMessage("Account Created Successfully.");
 			message.setStatusCode("200");
-
 			responseObject.setObject(customerResponse);
 			responseObject.setMessage(message);
-			// statusCodeHttp = HttpStatus.CREATED;
-
 		} else {
-
 			message.setMessage("Account creation failed, please try later.");
 			message.setStatusCode("400");
-
 			responseObject.setMessage(message);
-			// statusCodeHttp = HttpStatus.EXPECTATION_FAILED;
 		}
 		return new ResponseEntity<ResponseObject>(responseObject, HttpStatus.OK);
 	}
@@ -96,7 +89,6 @@ public class AccountController {
 			message.setMessage("Beneficiary Account added successfully.");
 			responseObject.setObject(savedBeneficiary);
 			responseObject.setMessage(message);
-
 		} else {
 			message.setStatusCode("406");
 			message.setMessage("Beneficiary Account could not be added, please try later.");
@@ -115,7 +107,6 @@ public class AccountController {
 			message.setMessage("Transaction completed successfully.");
 			responseObject.setObject(transaction);
 			responseObject.setMessage(message);
-
 		} else {
 			message.setStatusCode("406");
 			message.setMessage("Transaction Failed, please try later.");

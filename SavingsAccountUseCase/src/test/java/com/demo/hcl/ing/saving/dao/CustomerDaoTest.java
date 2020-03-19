@@ -7,16 +7,15 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import com.demo.hcl.ing.saving.Utils;
 import com.demo.hcl.ing.saving.entity.Customer;
-import com.demo.hcl.ing.saving.service.customerdetails.Utils;
 
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @DataJpaTest
-public class CustomerDaoTest {
+class CustomerDaoTest {
 
 	@Autowired
 	CustomerDao customerDao;
-	
 	
 	@Test
 	void test() {
@@ -27,7 +26,5 @@ public class CustomerDaoTest {
 		assertions.assertThat(customer).as("Book")
         .isEqualToComparingOnlyGivenFields(customersaved, "firstName","lastName","gender","dateOfBirth","citizenship","state");
 	}
-	
-	
 	
 }

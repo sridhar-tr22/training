@@ -7,8 +7,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import com.demo.hcl.ing.saving.Utils;
 import com.demo.hcl.ing.saving.entity.Beneficiary;
-import com.demo.hcl.ing.saving.service.customerdetails.Utils;
 
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @DataJpaTest
@@ -29,7 +29,8 @@ class BeneficiaryDaoTest {
 		assertions.assertThat(beneficiary).as("Test")
         .isEqualToComparingOnlyGivenFields(savedBeneficiary, "accountHolderName","nickName","registerPayerfor",
         		"accountBranch","accountType","customerAccountNumber");
-		
 	}
+
+	
 
 }

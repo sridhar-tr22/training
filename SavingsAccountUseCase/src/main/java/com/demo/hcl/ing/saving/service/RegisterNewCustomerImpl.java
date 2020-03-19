@@ -1,7 +1,10 @@
 package com.demo.hcl.ing.saving.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +14,9 @@ import com.demo.hcl.ing.saving.entity.Customer;
 import com.demo.hcl.ing.saving.entity.CustomerCredentials;
 import com.demo.hcl.ing.saving.utils.AccountUtils;
 
-@Service
+@Service("registerNewCustomer")
 public class RegisterNewCustomerImpl implements RegisterNewCustomer {
-
+	Logger logger = LoggerFactory.getLogger(RegisterNewCustomerImpl.class);
 	@Autowired
 	AccountUtils accountUtils;
 
@@ -22,32 +25,57 @@ public class RegisterNewCustomerImpl implements RegisterNewCustomer {
 
 	@Override
 	public Customer newCustomerDetails(Customer customer) {
-		assignCustomerIdAndAccountNumber(customer);
-		Customer saved = customerDao.save(customer);
-		
-		System.out.println("Customer: " + saved);
-		
-		List<Account> account = saved.getAccount();
-		
-			System.out.println("Account: " + account);
-		
-		return saved;
+		Customer savedCustomer = null;
+		try {
+			if (customer != null) {
+				assignCustomerIdAndAccountNumber(customer);
+				savedCustomer = customerDao.save(customer);
+			}
+		} catch (Exception e) {
+			logger.error("Exception occured while saving user details");
+			e.printStackTrace();
+		}
+		return savedCustomer;
 	}
 
 	public Customer assignCustomerIdAndAccountNumber(Customer customer) {
-		customer.setCustomerId(accountUtils.generateCustomerId());
+		try {
+			if (customer != null) {
+				List<Account> list = new ArrayList<Account>();
+				customer.setCustomerId(accountUtils.generateCustomerId());
+				List<Account> acc = customer.getAccount();
+				if (acc != null) {
+					for (Account ac : acc) {
+						ac.setAccountNumber(accountUtils.generateNewAccountNumber());
+						list.add(ac);
+					}
+					customer.setAccount(list);
+				}
+			} else {
+				logger.info("Customer Details are not available");
+				return null;
+			}
+		} catch (Exception e) {
+			logger.error("Error while generating account number and customer Id" + e);
+		}
 		return customer;
+
 	}
 
 	@Override
 	public Boolean validateUser(CustomerCredentials customerCredentials) {
 		Customer customer = null;
 		Boolean flag = false;
-		customer = customerDao.findByEmailAddressAndPassword(customerCredentials.getEmail(),
-				customerCredentials.getPassword());
-		if (customer != null)
-			flag = true;
-
+		try {
+			customer = customerDao.findByEmailAddressAndPassword(customerCredentials.getEmail(),
+					customerCredentials.getPassword());
+			if (customer != null) {
+				flag = true;
+			}
+		} catch (Exception e) {
+			logger.error("Error while validaing user details " + e);
+			return flag;
+		}
 		return flag;
 	}
 

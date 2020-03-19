@@ -7,8 +7,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import com.demo.hcl.ing.saving.Utils;
 import com.demo.hcl.ing.saving.entity.Transaction;
-import com.demo.hcl.ing.saving.service.customerdetails.Utils;
 
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @DataJpaTest
@@ -26,8 +26,5 @@ class TransactionDaoTest {
 		
 		assertions.assertThat(tx).as("Trans")
         .isEqualToComparingOnlyGivenFields(trx, "fromAccount","toAccount","balance");
-		
-		
 	}
-
 }

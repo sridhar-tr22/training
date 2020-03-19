@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Customer {
@@ -18,27 +20,35 @@ public class Customer {
 	}
 	@Id
 	private String customerId;
+	@NotEmpty(message = "Please provide a First Name")
 	private String firstName;
 	private String middleName;
 	private String lastName;
+	@NotEmpty(message = "Please provide Gender")
 	private String gender;
-	
+	@NotEmpty(message = "Please provide Address")
 	private String address1;
 	private String address2;
 	private String city;
+	@NotEmpty(message = "Please provide State")
 	private String state;
 	private Integer zipCode;
 	@OneToMany(targetEntity = Account.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "cust_fk", referencedColumnName = "customerId")
 	private List<Account> account;
-	
+	@NotEmpty(message = "Please provide Phone Number")
 	private String phoneNumber;
+	@NotEmpty(message = "Please provide Email Address")
 	private String emailAddress;
+	@NotNull(message = "Please provide account opening balance")
 	private Integer accountOpeningBalance;
+	@NotEmpty(message = "Please provide date of birth")
 	private String dateOfBirth;
 	private String citizenship;
+	@NotEmpty(message = "Please provide aadhar Number")
 	private String aadharNumber;
 	private String passportNumber;
+	@NotEmpty(message = "Please provide account type")
 	private String accountType;
 	public Customer(String customerId, String firstName, String middleName, String lastName, String gender,
 			String address1, String address2, String city, String state, Integer zipCode, List<Account> account,

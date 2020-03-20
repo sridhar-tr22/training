@@ -138,21 +138,32 @@ public class TransactionServiceImpl implements TransactionService {
 	public Boolean validateBeneficiary(Transaction transaction) {
 		Boolean flag = false;
 		try {
-			logger.info("Transaction details are = "+transaction);
-			List<Beneficiary> beneficiaryList = beneficiaryDao
-					.findByCustomerAccountNumber(transaction.getFromAccount());
-				logger.info("List of beneficiaryList "+beneficiaryList);
-			for (Beneficiary bf : beneficiaryList) {
-				if (bf.getBeneficiaryAccountNumber().equals(transaction.getToAccount())) {
-					flag = true;
-					break;
+			logger.info("Transaction details are = " + transaction);
+			List<Beneficiary> beneficiaryList = fetchListOfBeneficiaries(transaction.getFromAccount());
+			if (beneficiaryList != null) {
+				logger.info("List of beneficiaryList " + beneficiaryList);
+				for (Beneficiary bf : beneficiaryList) {
+					if (bf.getBeneficiaryAccountNumber().equals(transaction.getToAccount())) {
+						flag = true;
+						break;
+					}
 				}
 			}
 		} catch (Exception e) {
 			logger.error("Exception occured while validating beneficiary");
 		}
-		logger.info("flag = "+flag);
+		logger.info("flag = " + flag);
 		return flag;
 	}
+	
+	public List<Beneficiary> fetchListOfBeneficiaries(Long customerNumber){
+		
+		List<Beneficiary> beneficiaryList =null;
+		 beneficiaryList = beneficiaryDao.findByCustomerAccountNumber(customerNumber);
+		
+		return beneficiaryList;
+		
+	}
+	
 
 }

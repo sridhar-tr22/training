@@ -2,17 +2,6 @@ package com.demo.hcl.ing.saving;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import com.demo.hcl.ing.saving.service.AccountService;
-import com.demo.hcl.ing.saving.service.AccountServieImpl;
-import com.demo.hcl.ing.saving.service.RegisterNewBeneficiary;
-import com.demo.hcl.ing.saving.service.RegisterNewBeneficiaryImpl;
-import com.demo.hcl.ing.saving.service.RegisterNewCustomer;
-import com.demo.hcl.ing.saving.service.RegisterNewCustomerImpl;
-import com.demo.hcl.ing.saving.service.TransactionService;
-import com.demo.hcl.ing.saving.service.TransactionServiceImpl;
-import com.demo.hcl.ing.saving.utils.AccountUtils;
 
 @SpringBootApplication
 public class SavingsAccountUseCaseApplication {

@@ -23,9 +23,5 @@ public class BeneficiaryDTO {
 		this.beneficiary = beneficiary;
 	}
 
-	@Override
-	public String toString() {
-		return "BeneficiaryDTO [beneficiary=" + beneficiary + "]";
-	}
 	
 }

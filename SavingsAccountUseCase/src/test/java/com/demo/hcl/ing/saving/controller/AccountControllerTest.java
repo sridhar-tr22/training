@@ -1,10 +1,15 @@
 package com.demo.hcl.ing.saving.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -14,10 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.demo.hcl.ing.saving.controller.AccountController;
 import com.demo.hcl.ing.saving.controller.response.ResponseObject;
 import com.demo.hcl.ing.saving.dto.BeneficiaryDTO;
 import com.demo.hcl.ing.saving.dto.CustomerDTO;
@@ -28,18 +31,6 @@ import com.demo.hcl.ing.saving.entity.CustomerCredentials;
 import com.demo.hcl.ing.saving.service.RegisterNewBeneficiary;
 import com.demo.hcl.ing.saving.service.RegisterNewCustomer;
 import com.demo.hcl.ing.saving.service.TransactionService;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.hamcrest.Matchers.any;
 
 @WebMvcTest
 public class AccountControllerTest {

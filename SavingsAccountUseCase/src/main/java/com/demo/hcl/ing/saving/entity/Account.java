@@ -1,11 +1,7 @@
 package com.demo.hcl.ing.saving.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.demo.hcl.ing.saving.utils.AccountUtils;
 
 @Entity
 public class Account {
